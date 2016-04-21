@@ -1,17 +1,24 @@
 <html>
 <head>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-    <script type="text/javascript" src="/chat.js"></script>
     <link href="/chat.css" rel="stylesheet" type="text/css" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css' />
 </head>
 <body>
 <div id="cont">
     <input id="link" placeholder="Paste your Youtube Link Here" size="40" />
+
+    <form id="search-yt">
+        <p>Search Youtube</p>
+        <input type="text" id="youtube-search" placeholder="Search youtube" />
+    </form>
+        <p>Results</p>
+        <div id="results"></div>
 </div>
 
-
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/chat.js"></script>
+    
+    <script src="https://apis.google.com/js/client.js?onload=init"></script>
 </body>
 </html>

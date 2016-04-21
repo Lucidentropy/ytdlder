@@ -37,7 +37,7 @@
         console.log(data.videoTitle);
         console.log(data.file);
 
-        res.send('<script>window.close();</script>');
+        //res.send('<script>window.close();</script>');
     });
      
     YD.on("error", function(error) {

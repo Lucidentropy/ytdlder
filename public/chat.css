@@ -17,3 +17,32 @@ html {
     form { display:inline-block; width:100%;}
     div { position:relative; }
     
+    #cont { 
+        width:600px;
+        margin:100px auto;
+        border:1px solid #333;
+        padding:20px;
+        border-radius:10px;
+    }
+#results div {
+    border: 1px solid #333;
+    padding: 10px;
+    margin: 0 0 10px;
+    background-color: #fefefe;
+    border-radius: 2px;
+}
+
+#results div img {
+    float:left;
+    margin:0 10px 0 0;
+        outline: 1px solid #333;
+}
+
+#results .title {
+    font-weight:bold;
+    font-size:15px;
+}
+
+#results .link {
+    cursor:pointer;
+}
