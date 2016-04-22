@@ -6,6 +6,6 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "3.x",
-    "socket.io": "~0.9.14"
+    "socket.io": "^0.9.17"
   }
 }

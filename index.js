@@ -1,13 +1,26 @@
+  var downloadsPath = './downloads';
+  var ffmpegPath = './ffmpeg';
+
   var express = require('express');
   var app = express();
+  var fs = require('fs');
+
+  var http = require('http');
+  var server = http.createServer(app);
+  var io = require('socket.io').listen(server, {
+      'log': false
+  });
+  
   var YoutubeMp3Downloader = require('youtube-mp3-downloader');
   var YD = new YoutubeMp3Downloader({
-      "ffmpegPath": "./ffmpeg",        // Where is the FFmpeg binary located? 
-      "outputPath": "./downloads",    // Where should the downloaded and encoded files be stored? 
+      "ffmpegPath": ffmpegPath,        // Where is the FFmpeg binary located? 
+      "outputPath": downloadsPath,    // Where should the downloaded and encoded files be stored? 
       "youtubeVideoQuality": "highest",       // What video quality should be used? 
-      "queueParallelism": 2,                  // How many parallel downloads/encodes should be started? 
-      "progressTimeout": 2000                 // How long should be the interval of the progress reports 
+      "queueParallelism": 1,                  // How many parallel downloads/encodes should be started? 
+      "progressTimeout": 200                 // How long should be the interval of the progress reports 
   });
+
+
 
   app.use(express.static('public')); // document root
   
@@ -30,13 +43,10 @@
     console.log('Downloading video id : '  + videoId);
 
     YD.download(videoId);
+    io.sockets.emit('started');
      
     YD.on("finished", function(data) {
-        console.log('DOWNLOAD COMPLETE');
-        console.log(data.videoId);
-        console.log(data.videoTitle);
-        console.log(data.file);
-
+        io.sockets.emit('complete', data);
         //res.send('<script>window.close();</script>');
     });
      
@@ -46,10 +56,22 @@
      
     YD.on("progress", function(progress) {
         console.log('Downloading');
+        io.sockets.emit('progress', progress);
     });
 
 
   });
 
-  app.listen(8888);
-  console.log("Server started");
+var files;
+io.sockets.on('connection', function (socket) {
+    fs.readdir(downloadsPath, function(err, items) {
+      files = items;
+    });
+    socket.emit('files', files);
+
+      socket.on('disconnect', function () {});
+    
+  });
+
+  server.listen(8888);
+  console.log("Server started on port 8888");
